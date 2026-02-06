@@ -76,3 +76,60 @@ class Linked_List:
         new_node = Node(x)
         new_node.next = self.head
         self.head = new_node
+# --- بخش چهارم: درخت جستجوی دودویی (BST) ---
+class Tree_Node:
+    def __init__(self, key):
+        self.val = key
+        self.left = None
+        self.right = None
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def insert(self, key):
+        if self.root is None:
+            self.root = Tree_Node(key)
+        else:
+            self._insert_rec(self.root, key)
+
+    def _insert_rec(self, node, key):
+        if key < node.val:
+            if node.left is None:
+                node.left = Tree_Node(key)
+            else:
+                self._insert_rec(node.left, key)
+        else:
+            if node.right is None:
+                node.right = Tree_Node(key)
+            else:
+                self._insert_rec(node.right, key)
+
+    # نمایش درخت به صورت مرتب
+    def display_inorder(self, node):
+        if node:
+            self.display_inorder(node.left)
+            print(node.val, end=" ")
+            self.display_inorder(node.right)
+# --- بخش پنجم: گراف (Graph) ---
+class SimpleGraph:
+    def __init__(self):
+        self.adj_list = {}
+
+    def add_edge(self, u, v):
+        if u not in self.adj_list:
+            self.adj_list[u] = []
+        self.adj_list[u].append(v)
+
+    def bfs(self, start_node):
+        visited = set()
+        queue = [start_node]
+        visited.add(start_node)
+        print("Peymayesh BFS:", end=" ")
+        while queue:
+            current = queue.pop(0)
+            print(current, end=" ")
+            for neighbor in self.adj_list.get(current, []):
+                if neighbor not in visited:
+                    visited.add(neighbor)
+                    queue.append(neighbor)
